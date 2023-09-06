@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.smhrd.model.CalendarDAO;
 import com.smhrd.model.CalendarDTO;
 @WebServlet("/UploadCal")
 public class UploadCal extends HttpServlet {
@@ -35,14 +36,29 @@ public class UploadCal extends HttpServlet {
 		        json += line;
 		    }
 
-		    CalendarDTO calendarDTO = gson.fromJson(json, CalendarDTO.class);
+		    CalendarDTO dto = gson.fromJson(json, CalendarDTO.class);
 
-		    System.out.println("Title: " + calendarDTO.getTitle());
-		    System.out.println("Start: " + calendarDTO.getStart());
-		    System.out.println("End: " + calendarDTO.getEnd());
+		    System.out.println("Title: " + dto.getTitle());
+		    System.out.println("Start: " + dto.getStart());
+		    System.out.println("End: " + dto.getEnd());
+	
+		    
+		    CalendarDAO dao = new CalendarDAO();
+		    
+		    int cnt = dao.calUpload(dto);
+		    
+		    if (cnt > 0) {
+				System.out.println("업로드 성공");
+			}else {
+				System.out.println("업로드 실패");
+			}
+		    
+		    
 
 		   // 여기서 DB에 저장하는 로직을 수행하면 됩니다.
 		}
+		
+		
 
 	}
 }

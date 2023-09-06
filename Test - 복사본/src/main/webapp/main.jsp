@@ -19,6 +19,10 @@ html, body {
 	border: none;
 }
 
+.fc-event-time {
+    display: none;
+}
+
 /* [컨테이너 크기 설정] */
 #calendar {
 	width: 95%;
@@ -30,70 +34,51 @@ html, body {
 
 #calendar {
 	font-family: 'Arial', sans-serif;
-	background-color: #f9f9f9;
-	border: 1px solid #ccc;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	background-color: #F3EFFF; /* Light purple */
+	border-color: #DAB6FF; /* Medium purple */
+	box-shadow: 0px 10px 15px -3px rgba(134, 94, 156, 0.1), 0px 4px 6px -2px
+		rgba(134, 94, 156, 0.05);
 }
 
 /* 캘린더 헤더 */
 .fc-toolbar {
-	background-color: #ffcc99;
-	border-color: #ffaa66;
+	background-color: #9B51E0; /* Dark purple */
+	border-color: #6D28D9; /* Darker purple */
 	border-radius: 5px;
 }
 
 /* 캘린더 버튼 */
 .fc-button {
-	background-color: #ffaa66;
+	background-color: #A78BFA; /* Purple variant*/
 	color: #fff;
-	border: 1px solid #ff8844;
-	border-radius: 3px;
+	border: 1 px solid #8B5CF6; /* Another Purple variant*/
+	border-radius: 3 px;
 }
-/* 캘린더 버튼에 마우스 올렸을 때 */
+
 .fc-button:hover {
-	background-color: #ff8800;
-	border-color: #ff6600;
+	background-color: #C4B5FD; /* Lighter Purple variant on hover*/
+	border-color: #A78BFA;
 }
 
-/* 캘린더 이벤트 타이틀 */
-.fc-event-title {
+/* 캘린더 이벤트 타이틀 and Event Background Color*/
+.fc-event-title, .fc-event {
 	font-weight: bold;
-	color: #ff3300;
+	color: #000000;
 }
 
-/* 이벤트 백그라운드 */
-.fc-event {
-	background-color: #ffeedd;
-	border-color: #ffcc99;
-}
-
-/* Style the event border on hover */
 .fc-event:hover {
-	border-color: #ff6600;
+	border-color: #4C1D95; /* On Hover make the border darker purple */
 }
 
-/* Style the event's time text */
-.fc-time {
-	font-size: 12px;
-	color: #666;
+/* Style the event's time text and day number in month view*/
+.fc-time, .fc-day-number {
+	font-size: 12 px;
+	color: #000000;
 }
 
-/* Style the today's date highlight */
-.fc-day-today {
-	background-color: #ffffcc;
-	border-radius: 50%;
-}
-
-/* Style the weekend days */
-.fc-sat, .fc-sun {
-	background-color: #ffeeee;
-}
-
-/* Style the day number in month view */
-.fc-day-number {
-	font-size: 14px;
-	font-weight: bold;
-	color: #ff6600;
+/* Style the today's date highlight and weekend days background color */
+.fc-day-today, .fc-sat, .fc-sun {
+	background-color: #DDD6FE;
 }
 </style>
 
@@ -191,6 +176,8 @@ html, body {
         
                 selectLongPressDelay:300, // 선택 클릭 발동 시간 
                 
+                
+                
                 eventAdd: function(obj) { // 이벤트가 추가되면 발생하는 이벤트
                     console.log("");
                     console.log("=========================================");
@@ -250,13 +237,14 @@ html, body {
                     console.log("=========================================");
                     console.log(""); 
 
-                    var title = prompt('새로운 일정을 추가해주세요');
+                    var title = prompt('새로운 일정의 제목을 추가해주세요');
+                    
                     if (title) {
                         calendar.addEvent({
                             title: title,
                             start: arg.start,
                             end: arg.end,
-                            allDay: arg.allDay
+                            displayEventTime: false
                         })
 
                     }
@@ -272,7 +260,7 @@ html, body {
                         body: JSON.stringify({
                             title: title,
                             start: arg.start.toISOString(),
-                            end: arg.end ? arg.end.toISOString() : null
+                            end: arg.end ? arg.end.toISOString() : null,
                          })
                      })
                      .then(response => response.json())
@@ -289,10 +277,12 @@ html, body {
                 // 이벤트 일정 등록
                 // koreaNow(현재한국시간)
                 // events 안의 값이 이벤트가 된다.
-                events: [
-                     {title: '투케이 공부', start: koreaNow, end: koreaNow},
+                /* events: [
+                    {title: '투케이 공부', start: koreaNow, end: koreaNow},
                     {title: '투케이 공부', start: koreaNow, end: "2023-09-10"}
-                ]
+                ] */
+                
+                events: "\GetEvents"
             });
             
 
