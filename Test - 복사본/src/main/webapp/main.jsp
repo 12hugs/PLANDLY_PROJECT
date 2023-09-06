@@ -11,74 +11,66 @@
 
 <!-- 내부 CSS 스타일 지정 -->
 <style>
-html, body {
-	width: 100%;
-	height: 100%;
-	margin: 0 auto;
-	padding: 0;
-	border: none;
-}
-
-.fc-event-time {
-    display: none;
-}
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Roboto:wght@100&display=swap');
 
 /* [컨테이너 크기 설정] */
 #calendar {
-	width: 95%;
-	height: 90%;
-	margin: 0 auto;
+	width: 50%;
+	height: 50%;
+	margin: 0 ;
 	position: relative;
 	top: 5%;
 }
 
 #calendar {
-	font-family: 'Arial', sans-serif;
-	background-color: #F3EFFF; /* Light purple */
-	border-color: #DAB6FF; /* Medium purple */
-	box-shadow: 0px 10px 15px -3px rgba(134, 94, 156, 0.1), 0px 4px 6px -2px
-		rgba(134, 94, 156, 0.05);
+	font-family: 'Black Han Sans', sans-serif;
+	background-color: white;
 }
 
-/* 캘린더 헤더 */
-.fc-toolbar {
-	background-color: #9B51E0; /* Dark purple */
-	border-color: #6D28D9; /* Darker purple */
-	border-radius: 5px;
+/* 다음달로 넘어가는 버튼 */
+.fc-prev-button.fc-button.fc-button-primary{
+  	background-color: #877eda;
+    width: 75;
+    height: 45;
+    border-radius: 10;
+    border: 5px solid #b0aebe;
 }
 
-/* 캘린더 버튼 */
-.fc-button {
-	background-color: #A78BFA; /* Purple variant*/
-	color: #fff;
-	border: 1 px solid #8B5CF6; /* Another Purple variant*/
-	border-radius: 3 px;
+/* 저번달로 넘어가는 버튼 */
+.fc-next-button.fc-button.fc-button-primary{
+    background-color: #877eda;
+    width: 75;
+    height: 45;
+    border-radius: 10;
+    border: 5px solid #b0aebe;
 }
 
-.fc-button:hover {
-	background-color: #C4B5FD; /* Lighter Purple variant on hover*/
-	border-color: #A78BFA;
+.fc-today-button.fc-button.fc-button-primary{
+  background-color: #877eda;
+    width: 75;
+    height: 43;
+    border-radius: 10;
+    border: 5px solid #b0aebe;
 }
 
-/* 캘린더 이벤트 타이틀 and Event Background Color*/
-.fc-event-title, .fc-event {
-	font-weight: bold;
-	color: #000000;
+/* 캘린더 요소 하나씩의 border*/
+.fc-scrollgrid-sync-inner{
+  border: 2px solid #48455c;
 }
 
-.fc-event:hover {
-	border-color: #4C1D95; /* On Hover make the border darker purple */
+/* 일수 글꼴 변경*/
+.fc-daygrid-day-number{
+  font-size: 20;
+  
 }
 
-/* Style the event's time text and day number in month view*/
-.fc-time, .fc-day-number {
-	font-size: 12 px;
-	color: #000000;
+/* 장기 이벤트 색깔 */ 
+.fc-event-main-frame{
+    background-color: #877eda;
 }
 
-/* Style the today's date highlight and weekend days background color */
-.fc-day-today, .fc-sat, .fc-sun {
-	background-color: #DDD6FE;
+.fc--button.fc-button.fc-button-primary{
+    display: none;
 }
 </style>
 
@@ -151,10 +143,10 @@ html, body {
 
                 // 해더에 표시할 툴바
                 headerToolbar: {
-                    left: 'prev,next', // 이전, 다음
-                    //left: 'prev,next,today', // 이전, 다음, 오늘
+                    // 이전, 다음
+                    left : 'today',//left: 'prev,next,today', // 이전, 다음, 오늘
                     center: 'title', // 중앙 타이틀
-                    right: 'dayGridMonth,timeGridDay' // 월, 일
+                    right: 'prev, next' // 월, 일
                     //right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek' // 월, 주, 일, 일정목록
                 },
 
