@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+input[type="checkbox"] {
+    margin-right: 10px; /* 체크박스와 inputValue 사이 */
+}
+
+label {
+    margin-right: 10px; /* inputValue와 삭제 버튼 사이 */
+}

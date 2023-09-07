@@ -1,0 +1,50 @@
+package com.plandly.model;
+
+import java.sql.Timestamp;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
+public class CalendarDTO {
+	
+	private String email;
+	@NonNull
+	private String title;
+	@NonNull
+	private String start;
+	@NonNull
+	private String end;
+	
+	private String oldTitle;
+	
+	private String oldStart;
+	
+	private String oldEnd;
+
+	public CalendarDTO(String title, String start, String end, String oldTitle,
+			String oldStart, String oldEnd) {
+		this.title = title;
+		this.start = start;
+		this.end = end;
+		this.oldTitle = oldTitle;
+		this.oldStart = oldStart;
+		this.oldEnd = oldEnd;
+	}
+
+
+	
+	
+//    // 추가: 문자열 형식의 날짜/시간 정보를 저장할 필드
+//    private String startStr;
+//    private String endStr;	
+
+}
