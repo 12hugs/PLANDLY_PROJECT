@@ -21,9 +21,8 @@ public class LoginCon extends HttpServlet {
 		
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
-		String nick = request.getParameter("nick");
 		
-		BookDTO dto = new BookDTO(id, pw, nick);
+		BookDTO dto = new BookDTO(id, pw);
 		
 		BookDAO dao = new BookDAO();
 		

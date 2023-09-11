@@ -14,10 +14,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BookDTO {
 	
-	
-	private String id; @NonNull
-	private String pw; @NonNull
-	private String nick; @NonNull
+	@NonNull
+	private String id; 
+	@NonNull
+	private String pw; 
+	private String nick; 
 	private String email;
 	private String tel;
 	
