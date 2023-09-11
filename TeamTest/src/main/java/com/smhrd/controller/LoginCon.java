@@ -6,35 +6,36 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.smhrd.model.BookDAO;
 import com.smhrd.model.BookDTO;
 
 
-@WebServlet("/JoinCon")
-public class JoinCon extends HttpServlet {
-
+@WebServlet("/LoginCon")
+public class LoginCon extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
 		
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		String nick = request.getParameter("nick");
-		String email = request.getParameter("email");
-		String tel = request.getParameter("tel");
 		
-		BookDTO dto = new BookDTO(id, pw, nick, email, tel);
+		BookDTO dto = new BookDTO(id, pw, nick);
 		
 		BookDAO dao = new BookDAO();
 		
-		int cnt = dao.insert_member(dto);
-		
-		if (cnt > 0) {
-			System.out.println("회원가입 성공");
-			response.sendRedirect("Question4_Login.jsp");
+		BookDTO member_info = dao.login_member(dto);
+	
+		if (member_info.getId() != null) {
+			System.out.println("로그인 성공");
+			session.setAttribute("nick", member_info.getNick());
+			response.sendRedirect("Question4_Main.jsp");
 		}else {
-			System.out.println("회원가입 실패");
-			response.sendRedirect("Question4_Join.jsp");
+			System.out.println("로그인 실패");
+			response.sendRedirect("Question4_Login.jsp");
 		}
 		
 	}
