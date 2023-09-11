@@ -8,11 +8,59 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
+
+<style>
+.login-wrapper{
+    width: 400px;
+    height: 350px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.login-wrapper > h2{
+    font-size: 24px;
+    color: #6A24FE;
+    margin-bottom: 20px;
+}
+#login-form > input{
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+#login-form > input::placeholder{
+    color: #D2D2D2;
+}
+#login-form > input[type="submit"]{
+    color: #fff;
+    font-size: 16px;
+    background-color: #6A24FE;
+    margin-top: 20px;
+}
+
+</style>
+
 <body>
-	<ul>
-        <li onclick="kakaoLogin();"><a href="javascript:void(0)"> <span>카카오 로그인</span> </a></li>
-        <li onclick="kakaoLogout();"><a href="javascript:void(0)"> <span>카카오 로그아웃</span> </a></li>
-    </ul>
+	<div class="login-wrapper">
+        <h2>Login</h2>
+        <form action="MemberJoin" method="post" id="login-form">
+            <input type="text" name="email" placeholder="Email">
+            <input type="password" name="pw" placeholder="Password">
+            <label for="remember-check">
+                <input type="checkbox" id="remember-check">아이디 저장하기
+            </label>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    
+		<a href="MemJoin.jsp">회원가입</a>
+	
+        <a href="javascript:void(0)" onclick="kakaoLogin();"> <span>카카오 로그인</span> </a>
+        <a href="javascript:void(0)" onclick="kakaoLogout();"> <span>카카오 로그아웃</span> </a>
+    
     <script>
     // 카카오 로그인
         Kakao.init('933b64ba38169aa59da21e60a71d4944'); 
@@ -39,6 +87,12 @@
                                 },
                                 success : function(result) {
                                     console.log(result);
+                                    if (result.trim() === "SUCCESS") {  // trim() 메소드를 사용하여 공백 제거 후 비교
+                                        location.href = "Main.jsp";  // 회원 가입 성공 시 Main.jsp로 페이지 이동
+                                    } else {
+                                        alert("회원 가입 실패");
+                                        // 실패 시 처리할 로직 작성
+                                    }
                                 },
                                 error : function(error) {
                                     console.log(error);
