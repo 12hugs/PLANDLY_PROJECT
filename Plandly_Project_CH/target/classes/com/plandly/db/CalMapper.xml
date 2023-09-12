@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plandly.db.CalMapper">
+	<!-- SQL 쿼리 정의 -->
+
+	<insert id="UploadCal"
+		parameterType="com.plandly.model.CalendarDTO">
+		INSERT INTO CALENDAR_TEST (TITLE, "START", "END")
+		VALUES(#{title}, #{start}, #{end})
+	</insert>
+
+	<select id="GetAllEvents"
+		resultType="com.plandly.model.CalendarDTO">
+		SELECT * FROM CALENDAR_TEST
+	</select>
+	
+	<delete id="DeleteCal"
+		parameterType="com.plandly.model.CalendarDTO">
+		DELETE FROM CALENDAR_TEST WHERE TITLE = #{title} AND "START" = #{start} AND "END" = #{end}
+	</delete>
+	
+	<update id="UpdateCal" 
+		parameterType="com.plandly.model.CalendarDTO">
+		UPDATE CALENDAR_TEST SET TITLE = #{title}, "START" = #{start}, "END" = #{end}
+		WHERE TITLE = #{oldTitle} AND "START" = #{oldStart} AND "END" = #{oldEnd}
+	</update>
+	
+	<select id="calNumToGet"
+		resultType="com.plandly.model.CalendarDTO">
+		SELECT * FROM CALENDAR_TEST WHERE CAL_NUM = #{calendarNum}
+	</select>
+	
+	
+	
+</mapper>
