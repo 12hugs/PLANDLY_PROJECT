@@ -44,8 +44,28 @@
 			<div id="calendar"></div>
 		</div>
 		<div id="todo-container">
-			<h2 id="event-title"></h2>
+			<h3 id="event-title"></h3>
 			<p id="event-date"></p>
+			<select id="category-dropdown" style="display: none;">
+				<option value="">-- 카테고리 선택 --</option>
+				<option value="공부">공부</option>
+				<option value="시험">시험</option>
+				<option value="과제">과제</option>
+				<option value="입시">입시</option>
+				<option value="수능">수능</option>
+				<option value="일상">일상</option>
+				<option value="운동">운동</option>
+				<option value="건강">건강</option>
+				<option value="여행">여행</option>
+				<option value="음악">음악</option>
+				<option value="친구">친구</option>
+				<option value="응원">응원</option>
+				<option value="봉사">봉사</option>
+			</select>
+			<button id="event-delete-button" style="display: none;">
+				이벤트 삭제
+				<!-- 여기에 휴지통 이미지 삽입 -->
+			</button>
 			<input type="text" id="new-task" placeholder="새로운 할 일을 입력하세요"
 				style="display: none;">
 			<button id="add-task-button" style="display: none;">추가</button>

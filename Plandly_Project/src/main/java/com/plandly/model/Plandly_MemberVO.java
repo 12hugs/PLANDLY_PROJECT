@@ -13,6 +13,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Data
 @Getter
+@Setter
  
 
 public class Plandly_MemberVO {

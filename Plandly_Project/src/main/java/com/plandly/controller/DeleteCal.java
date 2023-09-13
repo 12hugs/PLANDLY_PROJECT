@@ -26,27 +26,18 @@ public class DeleteCal extends HttpServlet {
 
 	    Gson gson = new Gson();
 	    
-		String title = request.getParameter("title"); // title 파라미터 가져오기
-		String start = request.getParameter("start"); // start 파라미터 가져오기
-		String end = request.getParameter("end"); // end 파라미터 가져오기
+	    int calNum = Integer.parseInt(request.getParameter("cal_num"));
 
-		
-
+	
 		CalendarDTO dto = new CalendarDTO();
 
-		
-        dto.setTitle(title); // DTO에 title 설정
-        dto.setStart(start); // DTO에 start 설정
-        dto.setEnd(end); // DTO에 end 설정
+        dto.setCal_num(calNum);
         
-        
-		System.out.println("Title: " + dto.getTitle());
-		System.out.println("Start: " + dto.getStart());
-		System.out.println("End: " + dto.getEnd());
-
+        System.out.println(calNum + "번 이벤트 삭제");
+       
 		CalendarDAO dao = new CalendarDAO();
 
-		int cnt = dao.calDelete(dto);
+		int cnt = dao.calDelete(calNum);
 		
 		PrintWriter out = response.getWriter();
 

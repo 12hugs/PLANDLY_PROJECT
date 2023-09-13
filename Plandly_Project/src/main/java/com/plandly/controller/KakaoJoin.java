@@ -24,6 +24,10 @@ public class KakaoJoin extends HttpServlet {
 		String age = request.getParameter("age");
 		String gender = request.getParameter("gender");
 		String nickName = request.getParameter("nickName");
+		
+		Plandly_MemberVO vo = new Plandly_MemberVO();
+		
+		vo.setEmail(email);
 
 		
 		if (age.equals("10~19")) {
@@ -47,8 +51,10 @@ public class KakaoJoin extends HttpServlet {
 		System.out.println("닉네임 : " + nickName);
 
 		// 중복 체크
-		Plandly_MemberVO vo = new Plandly_MemberVO(email, pw, age, gender, nickName);
+		vo = new Plandly_MemberVO(email, pw, age, gender, nickName);
 		Plandly_MemberDAO dao = new Plandly_MemberDAO();
+		
+
 
 		int cnt = dao.login(vo);
 

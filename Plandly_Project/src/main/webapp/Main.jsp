@@ -19,6 +19,7 @@
 <body>
    <% // 인생카운트다운 시계 로직
    Plandly_MemberVO vo = (Plandly_MemberVO)session.getAttribute("vo");
+   vo.setEmail(vo.getEmail());
    System.out.println(vo.getEmail()+vo.getPw()+vo.getAge()+vo.getGender()+vo.getNickName());
    String age = vo.getAge();
    System.out.println(age);

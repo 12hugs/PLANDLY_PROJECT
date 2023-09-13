@@ -54,6 +54,12 @@
 		<description></description>
 		<servlet-class>com.plandly.controller.MemberJoin</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>UpCategoriCal</servlet-name>
+		<display-name>UpCategoriCal</display-name>
+		<description></description>
+		<servlet-class>com.plandly.controller.UpCategoriCal</servlet-class>
+	</servlet>
 
 
 	<servlet-mapping>
@@ -79,6 +85,10 @@
 	<servlet-mapping>
 		<servlet-name>MemberJoin</servlet-name>
 		<url-pattern>/MemberJoin</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpCategoriCal</servlet-name>
+		<url-pattern>/UpCategoriCal</url-pattern>
 	</servlet-mapping>
 
 

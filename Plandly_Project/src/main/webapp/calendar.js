@@ -19,6 +19,76 @@ https://fullcalendar.io/
 */
 
 
+var cal_num = null;
+var alertEventTitle = null;
+
+//할 일 추가 함수
+function addTask(taskText, todoNum, isDone) {
+
+
+	if (taskText) {
+		// 새로운 task 생성하기
+		var newTask = document.createElement('li');
+		newTask.dataset.todoNum = todoNum;  // data-* 속성을 사용하여 HTML 요소에 데이터 저장
+
+		// 체크박스 생성하기
+		var checkbox = document.createElement('input');
+		checkbox.type = 'checkbox';
+		checkbox.checked = (isDone === 'T');
+
+		// TODO: 서버로부터 받아온 IS_DONE 값에 따라 체크박스 초기 상태 설정
+
+		checkbox.addEventListener('change', function() {
+			$.ajax({
+				url: "UpdateTaskIsDone",
+				method: 'POST',
+				data: {
+					is_done: this.checked ? 'T' : 'F',
+					cal_num: cal_num,
+					todo_num: todoNum
+				},
+				success: function(response) {
+					console.log("IS_DONE 업데이트 성공");
+				},
+				error: function(xhr, status, error) {
+					alert("code:" + xhr.status + "\nmessage:" + xhr.responseText + "\nerror:" + error);
+				}
+			});
+		});
+
+
+		if (taskText) {
+
+			$.ajax({
+				url: "LoadTask",
+				method: 'POST',
+				data: {
+					cal_num: cal_num
+				},
+				success: function(response) {
+					console.log("Task 로드 성공");
+				},
+				error: function(xhr, status, error) {
+					console.log("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + error);
+				}
+			});
+
+
+		}
+
+
+		// task에 체크박스와 텍스트 추가하기
+		newTask.appendChild(checkbox);
+		newTask.append(" " + taskText);
+
+		// task list에 새로운 task 추가하기
+		document.getElementById('task-list').appendChild(newTask);
+
+	}
+}
+
+
+
 window.onload = async function() {
 
 
@@ -41,7 +111,7 @@ window.onload = async function() {
 
 
 
-	var cal_num = null;
+
 
 
 	// [full-calendar 생성]
@@ -122,9 +192,13 @@ window.onload = async function() {
 			// todo내부에 숨겨져있는 task생성 버튼과 입력창이 나타남.
 			document.getElementById('new-task').style.display = 'block';
 			document.getElementById('add-task-button').style.display = 'block';
+			document.getElementById('event-delete-button').style.display = 'block';
+			document.getElementById('category-dropdown').style.display = 'block';
 
 
 			cal_num = info.event.extendedProps.cal_num;
+			alertEventTitle = info.event.title;
+
 
 
 			if (cal_num != null) {
@@ -156,7 +230,15 @@ window.onload = async function() {
 						document.getElementById('task-list').innerHTML = '';
 						console.log(response);
 
-						var tasks = response;
+						var cate = response.cate;  // 응답으로부터 cate 값 추출
+
+						if (cate) {
+							document.getElementById('category-dropdown').value = cate;
+						} else {
+							document.getElementById('category-dropdown').value = "";
+						}
+
+						var tasks = response.tasks;
 
 						for (var i = 0; i < tasks.length; i++) {
 							console.log(tasks[i]);
@@ -167,6 +249,7 @@ window.onload = async function() {
 						alert("code:" + xhr.status + " " + "message: " + xhr.responseText + "" + "error: " + error);
 					}
 				});
+
 
 			}
 
@@ -252,6 +335,8 @@ window.onload = async function() {
 		// */
 
 		select: function(arg) { // 캘린더에서 특정 일자 선택 및 드래그로 일정 등록
+
+
 			console.log("");
 			console.log("=========================================");
 			console.log("[window onload] : [select]");
@@ -262,36 +347,43 @@ window.onload = async function() {
 
 			var title = prompt('새로운 일정의 제목을 추가해주세요');
 
-			if (title) {
-				calendar.addEvent({
-					title: title,
-					start: arg.start,
-					end: arg.end,
-					displayEventTime: false,
-					cal_num: cal_num
-				})
 
-			}
+
+
 			// 여기서 서버에 데이터를 보냅니다.
 			if (title) {
 
-				fetch('UploadCal', {
+				$.ajax({
+					url: 'UploadCal',
 					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-						// 'Content-Type': 'application/x-www-form-urlencoded',
-					},
-					body: JSON.stringify({
+					data: {
 						title: title,
 						start: arg.start.toISOString(),
 						end: arg.end ? arg.end.toISOString() : null,
-					})
-				})
-					.then(response => response.text())
-					.then(text => console.log(text))
-					.catch((error) => {
-						console.error('Error:', error);
-					});
+					},
+					success: function(response) {
+						// 성공적으로 처리된 후에 실행할 코드 작성
+						console.log('일정 등록 성공.');
+
+						cal_num = response['CAL_NUM'];
+						console.log("최초 생성 calnum : " + cal_num);
+						if (title) {
+							calendar.addEvent({
+								id: cal_num,
+								title: title,
+								start: arg.start,
+								end: arg.end,
+								displayEventTime: false,
+								cal_num: cal_num
+							})
+
+						}
+					},
+					error: function(error) {
+						// 오류 발생 시 실행할 코드 작성
+						alert("code:" + error.status + " " + "message: " + error.responseText);
+					}
+				});
 			}
 
 
@@ -340,7 +432,7 @@ window.onload = async function() {
 					console.log(response)
 
 					addTask(newTaskText, todoNum);
-					
+
 					document.getElementById('new-task').value = '';
 				},
 				error: function(xhr, status, error) {
@@ -350,72 +442,76 @@ window.onload = async function() {
 		}
 	});
 
+	var eventDeleteButton = document.getElementById('event-delete-button');
 
 
-	//할 일 추가 함수
-	function addTask(taskText, todoNum, isDone) {
+	// 이벤트 삭제 버튼
 
+	eventDeleteButton.addEventListener('click', function() {
+		eveDelete = confirm("정말로 " + "\'" + alertEventTitle + "\'" + "일정을 삭제하시겠습니까?")
 
-		if (taskText) {
-			// 새로운 task 생성하기
-			var newTask = document.createElement('li');
-			newTask.dataset.todoNum = todoNum;  // data-* 속성을 사용하여 HTML 요소에 데이터 저장
+		if (eveDelete) {
+			$.ajax({
+				url: "DeleteCal",
+				method: 'POST',
+				data: {
+					cal_num: cal_num
+				},
+				success: function(response) {
+					console.log('일정 삭제 성공.');
 
-			// 체크박스 생성하기
-			var checkbox = document.createElement('input');
-			checkbox.type = 'checkbox';
-			checkbox.checked = (isDone === 'T');
-
-			// TODO: 서버로부터 받아온 IS_DONE 값에 따라 체크박스 초기 상태 설정
-
-			checkbox.addEventListener('change', function() {
-				$.ajax({
-					url: "UpdateTaskIsDone",
-					method: 'POST',
-					data: {
-						is_done: this.checked ? 'T' : 'F',
-						cal_num: cal_num,
-						todo_num: todoNum
-					},
-					success: function(response) {
-						console.log("IS_DONE 업데이트 성공");
-					},
-					error: function(xhr, status, error) {
-						alert("code:" + xhr.status + "\nmessage:" + xhr.responseText + "\nerror:" + error);
+					// AJAX 요청이 성공적으로 완료된 후에 해당 이벤트 제거
+					var event = calendar.getEventById(cal_num);  // id로 이벤트 객체 가져오기
+					if (event) {  // 해당 id의 이벤트가 존재하면
+						event.remove();  // 해당 이벤트 제거
 					}
-				});
+
+					document.getElementById('new-task').value = '';
+
+					// todo-container 비우기 
+					document.getElementById('task-list').innerHTML = '';
+					document.getElementById('event-title').innerHTML = '';
+					document.getElementById('event-date').innerHTML = '';
+
+					// 추가 컨텐츠 숨기기 
+					document.getElementById('new-task').style.display = 'none';
+					document.getElementById('add-task-button').style.display = 'none';
+					document.getElementById('event-delete-button').style.display = 'none';
+					document.getElementById('category-dropdown').style.display = 'none';
+
+				},
+				error: function(xhr, status, error) {
+					alert("code:" + xhr.status + " " + "message: " + xhr.responseText + " " + "error: " + error);
+				}
 			});
-
-
-			if (taskText) {
-
-				$.ajax({
-					url: "LoadTask",
-					method: 'POST',
-					data: {
-						cal_num: cal_num
-					},
-					success: function(response) {
-						console.log("Task 로드 성공");
-					},
-					error: function(xhr, status, error) {
-						console.log("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + error);
-					}
-				});
-
-
-			}
-
-
-			// task에 체크박스와 텍스트 추가하기
-			newTask.appendChild(checkbox);
-			newTask.append(" " + taskText);
-
-			// task list에 새로운 task 추가하기
-			document.getElementById('task-list').appendChild(newTask);
-
 		}
-	}
+
+	})
+
+	var categoryDropdown = document.getElementById('category-dropdown');
+
+	// 카테고리 드롭다운의 변경을 감지
+	categoryDropdown.addEventListener('change', function() {
+		var selectedCategory = this.value;  // 현재 선택된 카테고리 값 가져오기
+
+		// AJAX 요청으로 데이터 전송
+		$.ajax({
+			url: "UpCategoriCal",
+			method: 'POST',
+			data: {
+				cate: selectedCategory,
+				cal_num: cal_num
+			},
+			success: function(response) {
+				console.log('카테고리 업데이트 성공.');
+			},
+			error: function(xhr, status, error) {
+				alert("code:" + xhr.status + "\nmessage:" + xhr.responseText + "\nerror:" + error);
+			}
+		});
+	});
+
+
 
 
 

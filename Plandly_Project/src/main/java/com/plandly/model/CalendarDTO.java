@@ -32,6 +32,8 @@ public class CalendarDTO {
 	
 	private int cal_num;
 	
+	private String cate;
+	
 
 	public CalendarDTO(String title, String start, String end, String oldTitle,
 			String oldStart, String oldEnd) {
@@ -49,6 +51,20 @@ public class CalendarDTO {
 		this.start = start;
 		this.end = end;
 		this.cal_num = cal_num;
+	}
+
+
+	public CalendarDTO(String email, String title, String start, String end) {
+		this.email = email;
+		this.title = title;
+		this.start = start;
+		this.end = end;
+	}
+
+
+	public CalendarDTO(int cal_num, String cate) {
+		this.cal_num = cal_num;
+		this.cate = cate;
 	}
 
 
