@@ -54,6 +54,18 @@ public class CalendarDAO {
 		
 		return cnt;
 	}
+
+	public CalendarDTO calNumToGet(int calendarNum) {
+		
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
+		CalendarDTO events = sqlSession.selectOne("com.plandly.db.CalMapper.calNumToGet", calendarNum);
+		
+		sqlSession.close();
+		
+		return events;
+		
+	}
 	
 	
 	

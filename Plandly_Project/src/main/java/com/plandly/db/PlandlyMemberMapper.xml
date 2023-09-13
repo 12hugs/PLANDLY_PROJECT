@@ -15,4 +15,16 @@
 	<select id="memberSession" parameterType="com.plandly.model.Plandly_MemberVO" resultType="com.plandly.model.Plandly_MemberVO">
 	    SELECT * FROM member_test WHERE email = #{email}
 	</select>
+	
+	<select id="openTodoTask" resultType="com.plandly.model.OpenTodoVO"> <!-- 중복 제거 전 -->
+		SELECT CT.TITLE, CT."START", CT."END", CT.CAL_NUM , MT.EMAIL, MT.NICKNAME, TT.TASK, TT.IS_DONE, TT.CATE FROM CALENDAR_TEST CT INNER JOIN MEMBER_TEST MT ON CT.FK_EMAIL = MT.EMAIL INNER JOIN TODO_TEST TT ON CT.CAL_NUM = TT.CALENDAR_NUM
+	</select>
+	
+	<select id="openTodo" resultType="com.plandly.model.OpenTodoVO"> <!-- 중복 제거 후 -->
+		SELECT MAX(CT.TITLE) AS TITLE, MAX(CT."START") AS "START", MAX(CT."END") AS "END", CT.CAL_NUM, MAX(MT.EMAIL) AS EMAIL, MAX(MT.NICKNAME) AS NICKNAME, MAX(TT.TASK) AS TASK, MAX(TT.IS_DONE) AS IS_DONE, MAX(TT.CATE) AS CATE FROM CALENDAR_TEST CT INNER JOIN MEMBER_TEST MT ON CT.FK_EMAIL = MT.EMAIL INNER JOIN TODO_TEST TT ON CT.CAL_NUM = TT.CALENDAR_NUM GROUP BY CT.CAL_NUM
+	</select>
+	
+	<update id="updateCheckbox" parameterType="map">
+    	UPDATE TODO_TEST SET IS_DONE = #{isChecked} WHERE CALENDAR_NUM = #{calendarNum}
+	</update>
 </mapper>

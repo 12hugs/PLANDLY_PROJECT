@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="calendarStyles.css">
 <link rel="stylesheet" href="todo.css">
+<link rel="stylesheet" href="calContainer.css">
 <!-- ===================================================================================================== -->
 <!-- [CDN 주소 설정] -->
 <!-- ===================================================================================================== -->
@@ -23,7 +24,7 @@
 	src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
 <script
 	src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"></script>
 <!-- ===================================================================================================== -->
@@ -39,17 +40,17 @@
 	<!-- [컨테이너 생성] -->
 	<div id="main-container">
 		<div id="calendar-container">
+			<!-- 캘린더 -->
 			<div id="calendar"></div>
 		</div>
-		<div id="todo-list">
-			<h2>To-Do List</h2>
-			<div>
-				<button id="item-plus-btn" name="item-plus-btn">일정 추가</button>
-				<input type="text">
-			</div>
-			<ul id='todo-items'></ul>
+		<div id="todo-container">
+			<h2 id="event-title"></h2>
+			<p id="event-date"></p>
+			<input type="text" id="new-task" placeholder="새로운 할 일을 입력하세요"
+				style="display: none;">
+			<button id="add-task-button" style="display: none;">추가</button>
+			<ul id="task-list"></ul>
 		</div>
 	</div>
-
 </body>
 </html>

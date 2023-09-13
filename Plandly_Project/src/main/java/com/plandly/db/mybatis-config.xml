@@ -20,6 +20,7 @@
   <!-- sql문들을 정의해주는 mapper.xml을 계속해서 만들기 위해 경로를 잡아줌 -->
   <mappers>
     <mapper resource="com/plandly/db/PlandlyMemberMapper.xml"/>
-    <mapper resource="com/plandly/db/CalMapper.xml"/> <!-- 이동될 경로 잡아주기 -->
+    <mapper resource="com/plandly/db/CalMapper.xml"/>
+    <mapper resource="com/plandly/db/TodoMapper.xml"/>
   </mappers>
 </configuration>

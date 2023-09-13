@@ -21,7 +21,6 @@ https://fullcalendar.io/
 
 window.onload = async function() {
 
-	var deleteEvent = null;
 
 
 	console.log("");
@@ -39,6 +38,10 @@ window.onload = async function() {
 
 	// [calendar 객체 지정]
 	var calendarElement = document.getElementById("calendar");
+
+
+
+	var cal_num = null;
 
 
 	// [full-calendar 생성]
@@ -61,7 +64,7 @@ window.onload = async function() {
 
 		//initialDate: '2023-08-06', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
 
-		navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+		navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
 
 		editable: true, // 수정 가능 여부
 
@@ -78,6 +81,8 @@ window.onload = async function() {
 
 
 
+
+
 		eventClick: function(info) { // 등록된 일정 클릭 이벤트
 			console.log("");
 			console.log("=========================================");
@@ -87,33 +92,54 @@ window.onload = async function() {
 			console.log("=========================================");
 			console.log("");
 
-			// 캘린더에서 해당 일정 삭제
-			deleteEvent = confirm("정말로 이 일정을 삭제하시겠습니까?");
 
-			if (deleteEvent) {
-				// 선택된 이벤트의 정보 추출
-				var eventTitle = info.event.title;
-				var eventStart = info.event.start;
-				var eventEnd = info.event.end;
 
-				console.log(eventTitle);
-				console.log(eventStart.toISOString());
-				console.log(eventEnd.toISOString());
+			var eventTitle = info.event.title;
+			var eventStart = info.event.start;
+			var eventEnd = info.event.end;
 
-				// AJAX 요청으로 데이터 전송
+			// 날짜를 "월/일" 로 포맷팅
+			var formattedStart = (eventStart.getMonth() + 1) + '월/' + eventStart.getDate() + '일';
+			var formattedEnd = (eventEnd.getMonth() + 1) + '월/' + (eventEnd.getDate() - 1) + '일';
+
+			if (formattedStart != formattedEnd) {
+				// todo-container에 기존 내용을 유지하면서 새로운 내용 추가
+				var titleContainer = document.getElementById('event-title');
+				titleContainer.innerHTML = '<h2>' + eventTitle + '</h2>'
+				var dateContainer = document.getElementById('event-date');
+				dateContainer.innerHTML =
+					'<p>' + formattedStart + '~' + (formattedEnd ? formattedEnd : '') + '</p>';
+			} else {
+				// todo-container에 기존 내용을 유지하면서 새로운 내용 추가
+				var titleContainer = document.getElementById('event-title');
+				titleContainer.innerHTML = '<h2>' + eventTitle + '</h2>'
+				var dateContainer = document.getElementById('event-date');
+				dateContainer.innerHTML =
+					'<p>' + formattedStart + ' 일정' + '</p>';
+			}
+
+
+			// todo내부에 숨겨져있는 task생성 버튼과 입력창이 나타남.
+			document.getElementById('new-task').style.display = 'block';
+			document.getElementById('add-task-button').style.display = 'block';
+
+
+			cal_num = info.event.extendedProps.cal_num;
+
+
+			if (cal_num != null) {
+
+				console.log(cal_num);
+
 				$.ajax({
-					url: "DeleteCal", // 컨트롤러 URL 설정
+					url: "UploadTask", // 컨트롤러 URL 설정
 					method: 'POST',
 					data: {
-						title: eventTitle,
-						start: eventStart.toISOString(),
-						end: eventEnd ? eventEnd.toISOString() : null
+						cal_num: cal_num
 					},
 					success: function(response) {
 						// 성공적으로 처리된 후에 실행할 코드 작성
-						console.log('일정이 성공적으로 삭제되었습니다.');
-
-						info.event.remove();
+						console.log('이벤트 번호 송신.');
 					},
 					error: function(xhr, status, error) {
 						// 오류 발생 시 실행할 코드 작성
@@ -122,12 +148,32 @@ window.onload = async function() {
 
 				});
 
+				$.ajax({
+					url: "LoadTask",
+					method: 'POST',
+					data: { cal_num: cal_num },
+					success: function(response) {
+						document.getElementById('task-list').innerHTML = '';
+						console.log(response);
+
+						var tasks = response;
+
+						for (var i = 0; i < tasks.length; i++) {
+							console.log(tasks[i]);
+							addTask(tasks[i].task, tasks[i].todo_Num, tasks[i].is_Done);
+						}
+					},
+					error: function(xhr, status, error) {
+						alert("code:" + xhr.status + " " + "message: " + xhr.responseText + "" + "error: " + error);
+					}
+				});
+
 			}
 
 
-
-
 		},
+
+
 
 
 
@@ -172,7 +218,8 @@ window.onload = async function() {
 					end: eventEnd ? eventEnd.toISOString() : null,
 					oldTitle: oldTitle,
 					oldStart: oldStart.toISOString(),
-					oldEnd: oldEnd ? oldEnd.toISOString() : null
+					oldEnd: oldEnd ? oldEnd.toISOString() : null,
+					cal_num: cal_num
 				},
 				success: function(response) {
 					// 성공적으로 처리된 후에 실행할 코드 작성
@@ -220,7 +267,8 @@ window.onload = async function() {
 					title: title,
 					start: arg.start,
 					end: arg.end,
-					displayEventTime: false
+					displayEventTime: false,
+					cal_num: cal_num
 				})
 
 			}
@@ -239,8 +287,8 @@ window.onload = async function() {
 						end: arg.end ? arg.end.toISOString() : null,
 					})
 				})
-					.then(response => response.text())  
-					.then(text => console.log(text))  
+					.then(response => response.text())
+					.then(text => console.log(text))
 					.catch((error) => {
 						console.error('Error:', error);
 					});
@@ -259,10 +307,128 @@ window.onload = async function() {
 		] */
 
 		events: "\GetEvents"
+
+
+
+
+	});
+
+	// [캘린더 랜더링]
+	calendar.render();
+
+
+
+	var addTaskButton = document.getElementById('add-task-button');
+
+	addTaskButton.addEventListener('click', function() {
+		var newTaskText = document.getElementById('new-task').value;
+		// 서버로 새 할일 정보 전송 
+		if (newTaskText) {
+			$.ajax({
+				url: "UploadTask",
+				method: 'POST',
+				data: {
+					task_text: newTaskText,
+					cal_num: cal_num
+				},
+				success: function(response) {
+					console.log("새 할일 등록 성공");
+
+					// TODO: response에서 TODO_NUM을 가져옵니다.
+					var todoNum = response['TODO_NUM'];
+					console.log(todoNum)
+					console.log(response)
+
+					addTask(newTaskText, todoNum);
+					
+					document.getElementById('new-task').value = '';
+				},
+				error: function(xhr, status, error) {
+					alert("code:" + xhr.status + " " + "message: " + xhr.responseText + " " + "error: " + error);
+				}
+			});
+		}
 	});
 
 
-	// [캘린더 랜더링]
+
+	//할 일 추가 함수
+	function addTask(taskText, todoNum, isDone) {
+
+
+		if (taskText) {
+			// 새로운 task 생성하기
+			var newTask = document.createElement('li');
+			newTask.dataset.todoNum = todoNum;  // data-* 속성을 사용하여 HTML 요소에 데이터 저장
+
+			// 체크박스 생성하기
+			var checkbox = document.createElement('input');
+			checkbox.type = 'checkbox';
+			checkbox.checked = (isDone === 'T');
+
+			// TODO: 서버로부터 받아온 IS_DONE 값에 따라 체크박스 초기 상태 설정
+
+			checkbox.addEventListener('change', function() {
+				$.ajax({
+					url: "UpdateTaskIsDone",
+					method: 'POST',
+					data: {
+						is_done: this.checked ? 'T' : 'F',
+						cal_num: cal_num,
+						todo_num: todoNum
+					},
+					success: function(response) {
+						console.log("IS_DONE 업데이트 성공");
+					},
+					error: function(xhr, status, error) {
+						alert("code:" + xhr.status + "\nmessage:" + xhr.responseText + "\nerror:" + error);
+					}
+				});
+			});
+
+
+			if (taskText) {
+
+				$.ajax({
+					url: "LoadTask",
+					method: 'POST',
+					data: {
+						cal_num: cal_num
+					},
+					success: function(response) {
+						console.log("Task 로드 성공");
+					},
+					error: function(xhr, status, error) {
+						console.log("code:" + xhr.status + "\n" + "message:" + xhr.responseText + "\n" + "error:" + error);
+					}
+				});
+
+
+			}
+
+
+			// task에 체크박스와 텍스트 추가하기
+			newTask.appendChild(checkbox);
+			newTask.append(" " + taskText);
+
+			// task list에 새로운 task 추가하기
+			document.getElementById('task-list').appendChild(newTask);
+
+		}
+	}
+
+
+
+
+	//addTaskButton.addEventListener('click', addTask);
+	var newTaskInput = document.getElementById('new-task');
+	newTaskInput.addEventListener('keydown', function(event) {
+		if (event.key === 'Enter') {  // 엔터키가 눌렸는지 확인합니다.
+			event.preventDefault();  // 기본 동작(폼 제출 등)을 막습니다.
+			addTaskButton.click(); //버튼 클릭 시의 동작을 작동
+		}
+	});
+
 	calendar.render();
 
 }

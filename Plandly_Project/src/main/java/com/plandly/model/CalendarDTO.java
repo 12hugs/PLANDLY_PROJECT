@@ -1,6 +1,6 @@
 package com.plandly.model;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +29,9 @@ public class CalendarDTO {
 	private String oldStart;
 	
 	private String oldEnd;
+	
+	private int cal_num;
+	
 
 	public CalendarDTO(String title, String start, String end, String oldTitle,
 			String oldStart, String oldEnd) {
@@ -38,6 +41,14 @@ public class CalendarDTO {
 		this.oldTitle = oldTitle;
 		this.oldStart = oldStart;
 		this.oldEnd = oldEnd;
+	}
+
+
+	public CalendarDTO(@NonNull String title, @NonNull String start, @NonNull String end, int cal_num) {
+		this.title = title;
+		this.start = start;
+		this.end = end;
+		this.cal_num = cal_num;
 	}
 
 

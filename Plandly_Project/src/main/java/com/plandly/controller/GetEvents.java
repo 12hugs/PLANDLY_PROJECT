@@ -34,6 +34,7 @@ public class GetEvents extends HttpServlet {
 
         // 콘솔에 JSON 문자열 출력
         System.out.println(jsonStr);
+        
 
         // 응답으로 JSON 데이터 전송
 		response.getWriter().write(jsonStr);
