@@ -11,9 +11,9 @@
 
 <!-- 내부 CSS 스타일 지정 -->
 
-<link rel="stylesheet" href="calendarStyles.css">
-<link rel="stylesheet" href="todo.css">
-<link rel="stylesheet" href="calContainer.css">
+<link rel="stylesheet" href="css/calendarStyles.css">
+<link rel="stylesheet" href="css/todo.css">
+<link rel="stylesheet" href="css/calContainer.css">
 <!-- ===================================================================================================== -->
 <!-- [CDN 주소 설정] -->
 <!-- ===================================================================================================== -->
@@ -33,8 +33,8 @@
 <!-- ===================================================================================================== -->
 <!-- [자바스크립트 코드 지정] -->
 <!-- ===================================================================================================== -->
-<script src="calendar.js"></script>
-<script src="todo.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/todo.js"></script>
 </head>
 <body>
 	<!-- [컨테이너 생성] -->

@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
-<link rel="stylesheet" href="./Nav.css">
+<link rel="stylesheet" href="css/Nav.css">
    
 </head>
 
@@ -45,14 +45,27 @@
    %>
    
  <nav>
-      <!-- 타이머 넣는 박스 -->
-       <!-- 인생카운트시계 텍스트 -->
-       <div id="MyTimer">
-      <div id ="days" class = "timer"></div>
-    <div id="hours" class = "timer"></div>시
-    <div id="minutes" class = "timer"></div>분 
-    <div id="seconds" class = "timer"></div>
+        <!-- 인생카운트시계 텍스트 -->
+    <div id="countdown" class="countdown">
+	    <div class = "timer">
+	      <h2 id ="days"></h2>
+	      <small>Days</small>
+	    </div>
+	    <div class = "timer">
+	      <h2 id ="hours"></h2>
+	      <small>Hours</small>
+	    </div>
+	    <div class = "timer">
+	      <h2 id ="minutes"></h2>
+	      <small>Minutes</small>
+	    </div>
+	    <div class = "timer">
+	      <h2 id ="seconds"></h2>
+	      <small>Seconds</small>
+	    </div>
     </div>
+    
+    
         <ul id="nav-ul">
             <li>
                 <img id = "로고"src="" alt="">로고이미지

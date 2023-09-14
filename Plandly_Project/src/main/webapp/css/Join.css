@@ -4,16 +4,16 @@
   box-sizing: border-box;
 }
 #kakao{
-   background-image: url(./Img/kakao.png);
+   background-image: url(../Img/kakao.png);
    background-size: cover;
    /* background-image: url(./이미지/카카오톡/로고/라운드.png); */
 }
 #naver{
-    background-image: url(./Img/naver.png);
+    background-image: url(../Img/naver.png);
     background-size: cover;
 }
 #google{
-    background-image: url(./Img/google.jpg);
+    background-image: url(../Img/google.jpg);
     background-size: cover;
 }
 body {
@@ -205,5 +205,35 @@ label{
 }
 .join-box::-webkit-scrollbar-thumb{
   background: #000;
- 
+}
+
+/* 중복체크 버튼 스타일 */
+#btnemailcheck {
+  background-color: #007bff;
+  color: rgb(220, 226, 220);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btnemailcheck:hover {
+  background-color: #0056b3;
+  align-items: center;
+}
+
+/* 기존 스타일에서 중복체크 버튼 관련 스타일 제거 */
+form button#btnbtnemailcheck {
+  margin: 0; /* 기존 스타일에서의 마진 제거 */
+  box-shadow: none; /* 기존 스타일에서의 그림자 제거 */
+  font-size: inherit; /* 기존 스타일에서의 폰트 크기 유지 */
+  align-items: center;
+}
+
+/* 중복체크 버튼을 둘러싼 div에 스타일 추가 */
+div#btnbtnemailcheck{
+  margin-top: 20px;
+  text-align: center;
 }
