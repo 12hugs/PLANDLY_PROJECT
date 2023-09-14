@@ -60,6 +60,12 @@
 		<description></description>
 		<servlet-class>com.plandly.controller.UpCategoriCal</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>UpPublicCal</servlet-name>
+		<display-name>UpPublicCal</display-name>
+		<description></description>
+		<servlet-class>com.plandly.controller.UpPublicCal</servlet-class>
+	</servlet>
 
 
 	<servlet-mapping>
@@ -89,6 +95,10 @@
 	<servlet-mapping>
 		<servlet-name>UpCategoriCal</servlet-name>
 		<url-pattern>/UpCategoriCal</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpPublicCal</servlet-name>
+		<url-pattern>/UpPublicCal</url-pattern>
 	</servlet-mapping>
 
 
