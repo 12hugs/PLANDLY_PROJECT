@@ -66,6 +66,12 @@
 		<description></description>
 		<servlet-class>com.plandly.controller.UpPublicCal</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>MemberCheck</servlet-name>
+		<display-name>MemberCheck</display-name>
+		<description></description>
+		<servlet-class>com.plandly.controller.MemberCheck</servlet-class>
+	</servlet>
 
 
 	<servlet-mapping>
@@ -100,7 +106,11 @@
 		<servlet-name>UpPublicCal</servlet-name>
 		<url-pattern>/UpPublicCal</url-pattern>
 	</servlet-mapping>
-
+	<servlet-mapping>
+		<servlet-name>MemberCheck</servlet-name>
+		<url-pattern>/MemberCheck</url-pattern>
+	</servlet-mapping>
+	
 
 
 

@@ -27,4 +27,7 @@
 	<update id="updateCheckbox" parameterType="map">
     	UPDATE TODO_TEST SET IS_DONE = #{isChecked} WHERE CALENDAR_NUM = #{calendarNum}
 	</update>
+	<select id="idCheck" resultType="com.plandly.model.Plandly_MemberVO">
+  		SELECT * FROM member_test WHERE email = #{email}
+    </select>
 </mapper>

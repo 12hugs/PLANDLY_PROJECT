@@ -58,4 +58,16 @@ public class Plandly_MemberDAO {
 	    return cnt;
 	}
 	
+	public boolean idCheck(String email) {
+		SqlSession sqlsession = Factory.openSession(true);
+		Plandly_MemberVO vo = sqlsession.selectOne("com.plandly.db.PlandlyMemberMapper.idCheck",email);
+		sqlsession.close();
+		
+		if(vo != null) {// 중복임
+			return false;
+		}else { // 중복이 아님
+			return true;
+		}
+	}
+	
 }
