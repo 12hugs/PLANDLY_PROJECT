@@ -1,0 +1,301 @@
+@charset "UTF-8";
+
+body {
+   font-family: 'Jua', sans-serif !important;
+}
+
+
+.YJ{
+   color: black !important;
+}
+
+input[type=radio] {
+   width: 30%;
+   height: 30px;
+   background: #eee;
+   padding: 16px;
+   margin: 8px 0;
+   border: 0;
+   outline: none;
+   border-radius: 20px;
+   box-shadow: inset 7px 2px 10px #babebc, inset -5px -5px 12px #fff;
+   /* appearance: none; */
+}
+
+label {
+   background-color: whitesmoke;
+}
+
+.btn-group {
+   width: 85%
+}
+
+.btn-check {
+   visibility: hidden;
+}
+
+/* 선택된 라디오 버튼의 스타일 */
+.btn-check:checked+label {
+   background-color: #007bff;
+   color: #fff;
+}
+
+.dropdown-menu.show {
+   opacity: 0.5;
+   font-weight: bolder;
+}
+
+.pwche {
+   display: flex;
+}
+
+#pwcheck {
+   padding: 0 10px;
+   font-size: 16px;
+}
+
+.is-info {
+   display: contents;
+   align-items: center;
+}
+
+.form-group .pwche {
+   width: 30%;
+}
+
+#pw-1 {
+   display: flex;
+}
+
+.text-box {
+   letter-spacing: 2px;
+   background-color: whitesmoke;
+   margin-top: 10px;
+}
+
+.container-fluid.px-0 {
+   background: whitesmoke;
+}
+
+
+/*===========    하트     ===============  */
+
+.heartBtn {
+   width: 3rem;
+   float: left;
+   border: none;
+   background: #e0ebf3;
+   margin-top: 0.6rem;
+   cursor: pointer;
+}
+
+.review_icon {
+   margin: 0.4rem;
+   height: 2rem;
+   float: left;
+   border: none;
+   cursor: pointer;
+}
+
+
+.xi-heart-o ::after {
+   margin: 0.4rem;
+   height: 2rem;
+   float: left;
+   border: none;
+   cursor: pointer;
+}
+
+li.like_count {
+   font-size: 70%;
+}
+
+
+/*===================Opentodo css =======================  */
+
+.img1 {
+   width: 100px;
+   /* 원하는 가로 크기로 설정하세요. */
+   height: auto;
+   /* 'auto'로 설정하면 가로 크기에 맞게 세로 크기가 자동 조절됩니다. */
+}
+
+.card-footer {
+   display: table;
+   table-layout: fixed;
+   text-align: left;
+   border-top: 2px solid rgb(210 214 217) !important;
+}
+
+.card-footer h3 {
+   display: table-cell;
+   vertical-align: middle;
+}
+
+.card-footer a {
+   display: table-cell !important;
+   vertical-align: middle !important;
+}
+
+main #card-header{
+   position: relative;
+   justify-content: space-between;
+   
+}
+
+.card-body {
+   width: 409.333
+}
+
+.todoList li {
+   font-size: 1.25rem;
+   padding: 0.6rem 1rem;
+   background: #e0ebf3;
+   list-style: none;
+}
+
+.todoList {
+   overflow: hidden;
+   height: 190px;
+   position: relative;
+   background: #e0ebf3;
+
+
+}
+
+.todoList::-webkit-scrollbar {
+   display: none;
+}
+
+.todoList {
+   -ms-overflow-style: none;
+   /* 인터넷 익스플로러 */
+   scrollbar-width: none;
+   /* 파이어폭스 */
+}
+
+/* 스크롤바 생성 */
+.todoList {
+   width: 90%;
+   height: 165px;
+   overflow-y: scroll;
+   max-height: 200px !important;
+   /* 원하는 높이로 설정 */
+}
+
+.card {
+   background-color: var(--bg-primary-cp) !important;
+   border-radius: 30px !important;
+   overflow: hidden !important;
+   display: flex !important;
+   flex-direction: column !important;
+   cursor: pointer;
+   padding-left: 0 !important;
+   padding-right: 0 !important;
+   box-shadow: 0px 2px 5px rgb(21, 22, 23, .15) !important;
+}
+
+.toggleSwitch {
+   width: 100px;
+   margin: 30px;
+   height: 50px;
+   display: block;
+   position: relative;
+   border-radius: 30px;
+   background: #838181a4 !important;
+   box-shadow: 0 0 16px 3px rgba(0 0 0/ 15%);
+   cursor: pointer;
+}
+
+.toggleSwitch .toggleButton {
+   width: 40px;
+   height: 40px;
+   position: absolute;
+   top: 50%;
+   left: 4px;
+   transform: translateY(-50%);
+   border-radius: 50%;
+   background: #ffefef00;
+}
+
+.toggleSwitch.active {
+   background: #030202be;
+}
+
+.toggleSwitch.active .toggleButton {
+   left: calc(100% - 44px);
+   background: #838181a4 !important;
+}
+
+.toggleSwitch,
+.toggleButton {
+   transition: all 0.2s ease-in;
+}
+
+.yj_title {
+   font-size: 170%;
+}
+
+/*====== 09.15  =====*/
+
+/*하단 숫자 페이징 */
+.tm-paging-links {
+   justify-content: center !important;
+}
+
+/*계정css*/
+main a {
+
+   padding-left: 5%;
+   font-size: 170%;
+
+}
+
+.bookmark {
+  position: absolute;
+  top: 7px; /* 필요에 따라 top 위치 조정 */
+  right: 7px; /* 필요에 따라 right 위치 조정 */
+  border: none !important; /* 테두리 제거 */
+   /* 원하는 색상 설정 */
+  background-color: #e0ebf3; /* 원하는 배경색 설정 */
+}
+
+.bookmark i {
+  color: rgb(171, 177, 182);
+}
+
+.heartBtn {
+   background-color : #e0ebf3;
+}
+
+button {
+   border: none;
+}
+
+
+
+div#YJ_content {
+    margin-left: 20px;
+    display: flex;
+}
+
+.search {
+  position: relative;
+  width: 300px;
+}
+
+input#YJ_input {
+  width: 100%;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+img#YJ_img {
+  position : absolute;
+  width: 17px;
+  top: 20px;
+  right: 12px;
+  margin: 0;
+}
