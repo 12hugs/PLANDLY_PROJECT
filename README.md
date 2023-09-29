@@ -71,7 +71,8 @@ ORM : MyBatis
 #### 팀원 : 임유민 (Main : Front-End)
 - UI/UX 설계
 - 웹사이트 상단 NAV 구현
-- 
+- 동기방식의 내정보 탭 페이지 구현
+- 웹사이트 폰트 적용
 
 #### 팀원 : 한창헌 (Main : Back-End)
 - 풀 캘린더 API 연동을 통한 캘린더 일정 및 TODO리스트의 비동기 CRUD 기능 구현
